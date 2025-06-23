@@ -1,9 +1,9 @@
-// app/layout.tsx
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { AuthProvider } from "./contexts/AuthContext";
-import { Toaster as SonnerToaster } from "sonner"; // Import Sonner's Toaster
+import { SettingsProvider } from "./contexts/SettingsContext";
+import { Toaster as SonnerToaster } from "sonner";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,10 +20,12 @@ export default function RootLayout({
   return (
     <html lang="pt-BR">
       <body className={inter.className}>
-        <AuthProvider>
-          {children}
-          <SonnerToaster richColors position="bottom-right" /> {/* Add SonnerToaster here */}
-        </AuthProvider>
+        <SettingsProvider>
+          <AuthProvider>
+            {children}
+            <SonnerToaster richColors position="bottom-right" />
+          </AuthProvider>
+        </SettingsProvider>
       </body>
     </html>
   );

@@ -16,6 +16,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { DeleteAccountDialog } from "./DeleteAccountDialog";
+import { Cog } from 'lucide-react';
 
 export function UserNav() {
   const { user, logout, isLoading } = useAuth();
@@ -66,6 +67,13 @@ export function UserNav() {
           <DropdownMenuItem onSelect={() => setIsDeleteDialogOpen(true)} className="text-red-600 hover:!text-red-700 hover:!bg-red-50 dark:hover:!bg-red-900/50">
             Excluir Conta
           </DropdownMenuItem>
+          <DropdownMenuSeparator />
+          <Link href="/settings" passHref>
+            <DropdownMenuItem>
+              <Cog className="mr-2 h-4 w-4" />
+              Configurações API
+            </DropdownMenuItem>
+          </Link>
           <DropdownMenuSeparator />
           <DropdownMenuItem onClick={logout} disabled={isLoading}>
             Sair

@@ -121,16 +121,22 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
-  const logout = () => {
+  const logout = async () => {
     setIsLoading(true);
-    apiClient.post('/logout').catch(err => console.error("Logout API call failed:", err));
 
-    localStorage.removeItem('authToken');
-    setUser(null);
-    setToken(null);
-    sonnerToast.info('Logout realizado.');
-    router.push('/login');
-    setIsLoading(false);
+    try {
+      await apiClient.post('/logout');
+      sonnerToast.info('Sessão encerrada no servidor.');
+    } catch (error: any) {
+      console.error("A chamada para /logout na API falhou:", error.message);
+    } finally {
+      localStorage.removeItem('authToken');
+      setUser(null);
+      setToken(null);
+      sonnerToast.info('Logout realizado com sucesso!');
+      router.push('/login');
+      setIsLoading(false);
+    }
   };
 
   const updateUserAccount = async (data: any) => {
